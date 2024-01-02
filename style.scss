@@ -1,0 +1,45 @@
+$c-input__font-size: 18px;
+$c-input__one-line__width: 350px;
+$c-input__one-line__height: 50px;
+$c-input__one-line__border-radius: 3px;
+
+.c-input {
+    font-size: 18px;
+    input {
+        border: 1px solid #000;
+    }
+}
+
+.c-input__text-one-line {
+    position: relative;
+    input {
+        width: $c-input__one-line__width;
+        height: $c-input__one-line__height;
+        border-radius: $c-input__one-line__border-radius;
+        padding: 0 15px;
+        background: transparent;
+        // outline: none;
+        &:focus {
+            border: 1px solid #106767;
+            outline: 1px solid #106767;
+        }
+        &:focus-within ~ label,
+        &:valid ~ label {
+            top: 0;
+            left: 15px;
+            font-size: 16px;
+            padding: 0 2px;
+            background: red;
+        }
+    }
+    label {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #000;
+        font-size: 19px;
+        pointer-events: none;
+        transition: 0.3s;
+    }
+}

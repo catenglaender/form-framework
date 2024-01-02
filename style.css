@@ -1,0 +1,40 @@
+.c-input {
+  font-size: 18px;
+}
+.c-input input {
+  border: 1px solid #000;
+}
+
+.c-input__text-one-line {
+  position: relative;
+}
+.c-input__text-one-line input {
+  width: 350px;
+  height: 50px;
+  border-radius: 3px;
+  padding: 0 15px;
+  background: transparent;
+}
+.c-input__text-one-line input:focus {
+  border: 1px solid #106767;
+  outline: 1px solid #106767;
+}
+.c-input__text-one-line input:focus-within ~ label, .c-input__text-one-line input:valid ~ label {
+  top: 0;
+  left: 15px;
+  font-size: 16px;
+  padding: 0 2px;
+  background: red;
+}
+.c-input__text-one-line label {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #000;
+  font-size: 19px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -10,13 +10,42 @@
 
 <body>
 
-    <div class="c-form c-form--information-prompt">
-        <div class="c-input c-input__text-one-line">
+    <form id="formTypeSelector">
+        <label>
+            <input type="radio" name="formType" value="complex-form" checked> Complex Form
+        </label>
+        <label>
+            <input type="radio" name="formType" value="information-prompt"> Information Prompt
+        </label>
+        <label>
+            <input type="radio" name="formType" value="wizard"> Wizard
+        </label>
+        <label>
+            <input type="radio" name="formType" value="editable-settings"> Editable Settings
+        </label>
+    </form>
+
+    <br /><br /><br />
+
+    <div class="c-form c-form--information-prompt" id="formContainer">
+        <div class="c-input c-input--text-one-line">
             <input id="email_s52nxr9l" type="text" required spellcheck="false">
             <label for="email_s52nxr9l">Email Address</label>
+            <div class="c-input__help-byline">We only use this email to reply to your query.</div>
         </div>
+        <fieldset class="c-input c-input--radio-fieldset">
+            <div class="c-input--radio-fieldset__layout">
+                <legend>Topic of your query</legend>
+                <div class="c-input--radio-fieldset__elements">
+                    <label for="r1"><input type="radio" name="topic" id="r1"><span class="c-input--radio-fieldset__radio-label">General Inquiry</span></label>
+                    <label for="r2"><input type="radio" name="topic" id="r2"><span class="c-input--radio-fieldset__radio-label">Sales</span></label>
+                    <label for="r3"><input type="radio" name="topic" id="r3"><span class="c-input--radio-fieldset__radio-label">Billing</span></label>
+                </div>
+            </div>
+        </fieldset>
     </div>
 
+    <script src="form-switcher.js"></script>
 
 </body>
 

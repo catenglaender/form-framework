@@ -1,45 +1,244 @@
+// importing core styling file
+@import "./fontawesome/scss/fontawesome.scss";
+
+// our project needs Solid + Brands
+@import "./fontawesome/scss/solid.scss";
+@import "./fontawesome/scss/brands.scss";
+
+$spacing-small: .8rem;
+$spacing-large: 1.4rem;
+
 $c-input__font-size: 18px;
-$c-input__one-line__width: 350px;
+$c-form--information-prompt__width: 350px;
+$c-form--complex-form__max-width: 950px;
 $c-input__one-line__height: 50px;
 $c-input__one-line__border-radius: 3px;
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+fieldset,
+.c-input--radio-fieldset__layout legend {
+    all: unset;
+    display: block;
+}
+
+//
+// shared by all inputs
+//
 .c-input {
-    font-size: 18px;
+    + .c-input {
+        margin-top: $spacing-large;
+    }
+
     input {
+        font-size: 18px;
         border: 1px solid #000;
+    }
+
+    label,
+    legend {
+        font-size: 19px;
     }
 }
 
-.c-input__text-one-line {
-    position: relative;
+.c-input--text-one-line {
     input {
-        width: $c-input__one-line__width;
         height: $c-input__one-line__height;
         border-radius: $c-input__one-line__border-radius;
         padding: 0 15px;
         background: transparent;
+
         // outline: none;
         &:focus {
             border: 1px solid #106767;
             outline: 1px solid #106767;
         }
-        &:focus-within ~ label,
-        &:valid ~ label {
-            top: 0;
+    }
+}
+
+
+//
+// styling for information prompts
+//
+.c-form--information-prompt {
+    .c-input--text-one-line {
+        position: relative;
+        width: $c-form--information-prompt__width;
+
+        input {
+            width: $c-form--information-prompt__width !important;
+
+            &:focus~label,
+            &:valid~label {
+                top: 0;
+                left: 15px;
+                font-size: 16px;
+                padding: 0 2px;
+                background: white;
+            }
+
+            &:focus~.c-input__help-byline {
+                display: block;
+            }
+        }
+
+        label {
+            position: absolute;
+            top: 50%;
             left: 15px;
-            font-size: 16px;
-            padding: 0 2px;
-            background: red;
+            transform: translateY(-50%);
+            color: #000;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .c-input__help-byline {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 300px;
+            padding: 20px;
+            background-color: lightgray;
         }
     }
-    label {
-        position: absolute;
-        top: 50%;
-        left: 15px;
-        transform: translateY(-50%);
-        color: #000;
-        font-size: 19px;
-        pointer-events: none;
-        transition: 0.3s;
+    .c-input--radio-fieldset__layout {
+        width: $c-form--information-prompt__width;
+        legend + .c-input--radio-fieldset__elements {
+            margin-top: $spacing-small
+        }
+        label {
+            display: block;
+            border: 1px solid black;
+            padding: $spacing-small;
+            border-radius: 8px;
+            + label {
+                margin-top: $spacing-small
+            }
+        }
+    
+    }
+
+}
+
+.c-form--complex-form {
+    max-width: $c-form--complex-form__max-width;
+
+    .c-input--text-one-line {
+        display: grid;
+        grid-template-columns: 25% 75%;
+        gap: $spacing-small;
+
+        label {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        input {
+            width: 100% !important;
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .c-input__help-byline {
+            grid-column: 2;
+            grid-row: 2;
+        }
+    }
+    .c-input--radio-fieldset__layout {
+        display: grid;
+        grid-template-columns: 25% 1fr;
+        gap: $spacing-small;
+    
+        legend {
+            grid-column: 1;
+        }
+    
+        .c-input--radio-fieldset__elements {
+            grid-column: 2;
+            label {
+                display: block;
+            }
+        }
+    }
+}
+
+.c-form--editable-settings {
+    max-width: $c-form--complex-form__max-width;
+
+    .c-input--text-one-line {
+        &:after {
+            @extend %fa-icon;
+            @extend .fa-solid;
+            content: fa-content($fa-var-pen);
+            order: 3;
+            right: 25px;
+            position: relative;
+            pointer-events: none;
+        }
+        display: flex;
+        gap: $spacing-small;
+
+        label {
+            font-weight: bold;
+            order: 1;
+            ::after {
+                content: ":";
+                display: inline;
+            }
+        }
+
+        input {
+            min-width: 20px;
+            order: 2;
+            padding: 0;
+            border: none;
+            height: auto;
+        }
+
+        .c-input__help-byline {
+            display: none;
+        }
+    }
+    .c-input--radio-fieldset__layout {
+        display: flex;
+        gap: $spacing-small;
+    
+        legend {
+            font-weight: bold;
+            order: 1;
+            ::after {
+                content: ":";
+            }
+        }
+    
+        .c-input--radio-fieldset__elements {
+            min-width: 30px;
+            order: 2;
+            input,
+            input:not(:checked) + .c-input--radio-fieldset__radio-label {
+                display: none;
+            }
+            &:hover,
+            &:focus-within {
+                input,
+                input + .c-input--radio-fieldset__radio-label {
+                    display: inline-block;
+                }
+            }
+            &:after {
+                @extend %fa-icon;
+                @extend .fa-solid;
+                content: fa-content($fa-var-pen);
+                order: 3;
+                position: relative;
+                pointer-events: none;
+            }
+        }
     }
 }
